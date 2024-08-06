@@ -2,18 +2,19 @@ pipeline{
     agent any
     environment{
         VOLUME_NAME = 'my-volume'
+         DOCKER_IMAGE = 'alpine'
     }
     stages{
         stage("Create a local dir"){
             steps{
-                sh 'mkdir -p jar-file'
+                sh 'mkdir jar-file'
             }
         }
-        stage("Copy the content of volume to jar-file"){
+        stage("Path of Volume"){
             steps{
                 script{
                      def VolumeInspectOutput = sh(script:" docker volume inspect ${VOLUME_NAME}",returnStdout:true).trim()
-                echo "Volume inspect output ${VolumeInspectOutput}"
+                echo "Volume inspect output ${volumeInspectOutput}"
                 def VolumePath = sh(script:"echo '${VolumeInspectOutput}' | jq -r .[0].Mountpoint", returnStdout : true).trim()
                 echo "Volume Path : ${VolumePath}"
                 env.VOLUME_PATH = VolumePath 
@@ -21,15 +22,22 @@ pipeline{
                
             }
         }
-         stage("Copy the volume content to jar-file"){
+        stage("Copy the volume content to jar-file"){
             steps{
-                script{
-                    sh "sudo -i"
-                sh "cp ${env.VOLUME_PATH}/ jar-file/"
-                sh "ls /jar-file"
-            }
+                 script {
+                    // Use a temporary container to access the volume and copy files
+                    sh """
+                        docker run --rm \
+                            -v ${VOLUME_NAME}:/volume \
+                            -v $(pwd)/jar-file:/jar-file \
+                            ${DOCKER_IMAGE} \
+                            sh -c "cp -r /volume/* /jar-file/"
+                    """
+                    
+                    // List files to verify
+                    sh "ls -l jar-file/"
+                }
         }
     }
     }
 }
-    
