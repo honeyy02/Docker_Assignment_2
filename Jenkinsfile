@@ -59,7 +59,7 @@ pipeline {
         stage("Run the container"){
             steps{
                 script{
-                    sh 'docker run -it --rm honeyy02/assignment2:latest'
+                    sh 'docker run -d --rm honeyy02/assignment2:latest'
                 }
             }
         }
