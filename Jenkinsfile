@@ -26,13 +26,8 @@ pipeline{
             steps{
                  script {
                     // Use a temporary container to access the volume and copy files
-                    sh """
-                        docker run --rm \
-                            -v ${env.VOLUME_NAME}:/volume \
-                            -v $(pwd)/jar-file:/jar-file \
-                            ${env.DOCKER_IMAGE} \
-                            sh -c "cp -r /volume/* /jar-file/"
-                    """
+                    sh "sudo -i"
+                    sh "cp -r ${env.VOLUME.PATH}/* jar-fie/"
                     
                     // List files to verify
                     sh "ls -l jar-file/"
