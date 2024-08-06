@@ -59,7 +59,7 @@ pipeline {
         stage("Run the container"){
             steps{
                 script{
-                    sh 'docker run --name assignment2 -d -p 8082:8080 my-app'
+                    sh 'docker run --name assignment2 -d -p 8082:8080 my-app:latest'
                 }
             }
         }
