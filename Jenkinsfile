@@ -12,7 +12,7 @@ pipeline{
         stage("Path of Volume"){
             steps{
                 script{
-                     def VolumeInspectOutput = sh(script:" docker volume inspect ${VOLUME_NAME}",returnStdout:true).trim()
+                     def VolumeInspectOutput = sh(script:" docker volume inspect ${env.VOLUME_NAME}",returnStdout:true).trim()
                 echo "Volume inspect output ${volumeInspectOutput}"
                 def VolumePath = sh(script:"echo '${VolumeInspectOutput}' | jq -r .[0].Mountpoint", returnStdout : true).trim()
                 echo "Volume Path : ${VolumePath}"
