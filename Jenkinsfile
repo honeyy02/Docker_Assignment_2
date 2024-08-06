@@ -2,7 +2,6 @@ pipeline{
     agent any
     environment{
         VOLUME_NAME = 'my-volume'
-         DOCKER_IMAGE = 'alpine'
     }
     stages{
         stage("Create a local dir"){
@@ -18,8 +17,7 @@ pipeline{
                 def VolumePath = sh(script:"echo '${VolumeInspectOutput}' | jq -r .[0].Mountpoint", returnStdout : true).trim()
                 echo "Volume Path : ${VolumePath}"
                 env.VOLUME_PATH = VolumePath 
-                }
-               
+                }  
             }
         }
         stage("Copy the volume content to jar-file"){
