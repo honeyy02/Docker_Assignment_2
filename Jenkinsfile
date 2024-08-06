@@ -28,9 +28,9 @@ pipeline{
                     // Use a temporary container to access the volume and copy files
                     sh """
                         docker run --rm \
-                            -v ${VOLUME_NAME}:/volume \
+                            -v ${env.VOLUME_NAME}:/volume \
                             -v $(pwd)/jar-file:/jar-file \
-                            ${DOCKER_IMAGE} \
+                            ${env.DOCKER_IMAGE} \
                             sh -c "cp -r /volume/* /jar-file/"
                     """
                     
