@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage("Create a local dir"){
             steps{
-                sh 'mkdir jar-file'
+                sh 'mkdir -p jar-file'
             }
         }
         stage("Path of Volume"){
