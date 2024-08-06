@@ -24,6 +24,7 @@ pipeline{
          stage("Copy the volume content to jar-file"){
             steps{
                 script{
+                    sh "sudo -i"
                 sh "cp ${env.VOLUME_PATH}/ jar-file/"
                 sh "ls /jar-file"
             }
