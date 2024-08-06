@@ -27,7 +27,7 @@ pipeline{
                  script {
                     // Use a temporary container to access the volume and copy files
                     sh "sudo -i"
-                    sh "cp -r ${env.VOLUME.PATH}/* jar-fie/"
+                    sh "cp -r ${env.VOLUME_PATH}/* jar-fie/"
                     
                     // List files to verify
                     sh "ls -l jar-file/"
