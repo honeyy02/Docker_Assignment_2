@@ -44,7 +44,7 @@ pipeline {
         stage("Build the docker image"){
             steps{
                 script{
-                    sh 'docker build -t assignment2 .'
+                    sh 'docker build -t honeyy02/assignment2 .'
                 }
             }
         }
@@ -59,7 +59,7 @@ pipeline {
         stage("Run the container"){
             steps{
                 script{
-                    sh 'docker run --name assignment2 -d -p 8082:8080 my-app:latest'
+                    sh 'docker run -it --rm honeyy02/assignment2:latest'
                 }
             }
         }
