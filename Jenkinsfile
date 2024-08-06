@@ -41,6 +41,33 @@ pipeline {
                 }
             }
         }
+        stage("Build the docker image"){
+            steps{
+                script{
+                    sh 'docker build -t assignment2 .'
+                }
+            }
+        }
+        stage("Stop and Remove the container"){
+            steps{
+                script{
+                    sh 'docker stop assignment2 || true'
+                    sh 'docker rm assignment2 || true'
+                }
+            }
+        }
+        stage("Run the container"){
+            steps{
+                script{
+                    sh 'docker run --name assignment2 -d -d 8082:8080 my-app'
+                }
+            }
+        }
+    }
+    post{
+        always{
+            cleanWs()
+        }
     }
 
     
