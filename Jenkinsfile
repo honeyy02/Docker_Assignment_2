@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Use a temporary container to access the volume and copy files
-                    sh "docker run --rm -v ${env.VOLUME_NAME} -v $(pwd)/jar-file:/jar-file alpine sh -c 'cp -r /volume/* /jar-file/'"
+                    sh "docker run --rm -v ${env.VOLUME_NAME}:/volume -v $\(pwd)/jar-file:/jar-file alpine sh -c 'cp -r /volume/* /jar-file/'"
                     
                     // List files to verify
                     sh "ls -l jar-file/"
